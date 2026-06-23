@@ -26,6 +26,8 @@ export const saveLocation = async (req, res) => {
 export const getHistory = async (req, res) => {
   try {
     const { agentId } = req.params;
+    console.log(agentId);
+    
 
     const locations = await Location.find({
       agentId,

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const locationSchema = new mongoose.Schema({
   agentId: {
     // type: mongoose.Schema.Types.ObjectId,
-    type: Number,
+    type: String,
     ref: "User",
     required: true,
     index: true,

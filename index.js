@@ -31,12 +31,12 @@ app.use((req, res, next) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/location", locationRoutes);
 
-app.post("/test", (req, res)=> {
-  console.log(req.body);
-  res.json({
-    success: true
-  })
-})
+// app.post("/test", (req, res)=> {
+//   console.log(req.body);
+//   res.json({
+//     success: true
+//   })
+// })
 
 // res logs
 app.use((req, res, next) => {
