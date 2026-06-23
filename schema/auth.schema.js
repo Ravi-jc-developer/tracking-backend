@@ -1,0 +1,16 @@
+import { z } from "zod"
+
+export const loginUserSchema = z.object({
+    mobile: z.string().regex(/^[0-9]{10}$/, "Mobile must be 10 digits"),
+})
+
+
+export const createUserSchema = loginUserSchema.extend({
+    name: z.string().min(3).max(20).optional(),
+    role: z.string().optional(),
+    email: z.string().email(),
+    password: z.string().refine(
+        (v) => v.length >= 6 && v.length <= 15,
+        "Password must be 6 to 15 characters long"
+    )
+})
