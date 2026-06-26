@@ -9,6 +9,13 @@ const locationSchema = new mongoose.Schema({
     index: true,
   },
 
+  trekId: {
+    // type: mongoose.Schema.Types.ObjectId,
+    type: String,
+    ref: "Trek",
+    required: true
+  },
+
   latitude: {
     type: Number,
     required: true,
