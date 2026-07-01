@@ -15,6 +15,14 @@ const trekSchema = new mongoose.Schema({
         type: Date,
         required: false
     },
+    distance: {
+        type: Number,
+        default: 0
+    },
+    lastCoord: {
+        lat: Number,
+        lng: Number,
+    },
     status: {
         type: String,
         enum: ["active", "completed"],

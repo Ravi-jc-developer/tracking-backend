@@ -39,6 +39,11 @@ const userSchema = new mongoose.Schema(
       enum: ["survey", "sales"],
       required: true,
     },
+
+    profileImage: {
+      type: String,
+      default: '',
+    },
   },
   {
     timestamps: true,

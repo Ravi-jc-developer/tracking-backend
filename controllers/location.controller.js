@@ -1,9 +1,50 @@
 import Location from "../models/Location.js";
 import Trek from "../models/Trek.js";
+import { getDistanceInMeters } from "../utils/distance.js";
 
 export const saveLocation = async (req, res) => {
   try {
     const { lat, lng, agentId, trekId } = req.body;
+
+    // find trek
+    const trek = await Trek.findById(trekId);
+
+    if (!trek) {
+      return res.status(404).json({
+        success: false,
+        message: "Trek not found.",
+      });
+    }
+
+    let distance = 0;
+
+    // if prev coord exist 
+    // calculate distance btw prev & curr
+    if (
+      trek.lastCoord?.lat != null &&
+      trek.lastCoord?.lng != null
+    ) {
+      distance = getDistanceInMeters(
+        trek.lastCoord,
+        { lat, lng }
+      );
+    }
+
+    // update distance & prev coords
+    await Trek.updateOne(
+      { _id: trekId },
+      {
+        $inc: {
+          distance,
+        },
+        $set: {
+          lastCoord: {
+            lat,
+            lng,
+          },
+        },
+      }
+    );
 
     await Location.create({
       //   agentId: req.user._id,
@@ -48,6 +89,7 @@ export const getHistory = async (req, res) => {
   }
 };
 
+// start tracking session
 export const createTrekSession = async (req, res) => {
   try {
     const { agentId } = req.body;
@@ -71,7 +113,7 @@ export const createTrekSession = async (req, res) => {
   }
 }
 
-
+// used to stop tracking
 export const updateTrekSession = async (req, res) => {
   try {
     const { trekId } = req.params;
@@ -80,7 +122,7 @@ export const updateTrekSession = async (req, res) => {
       { _id: trekId },
       {
         endedAt: Date.now(),
-        status: 'completed'
+        status: 'completed',
       }
     )
     // console.log(newTrek)

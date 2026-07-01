@@ -4,14 +4,14 @@ const authMiddleware = (req, res, next) => {
   try {
     //   token from header
     const authHeader = req.headers.authorization;
-
+    
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({
         status: false,
         message: "Unauthorized. No token found",
       });
     }
-
+    
     const token = authHeader.split(" ")[1];
 
     //   verify token
@@ -24,7 +24,7 @@ const authMiddleware = (req, res, next) => {
   } catch (error) {
     return res.status(401).json({
       status: false,
-      message: "Invalid or expired token",
+      message: "Invalid or expired token. Please try logout/login.",
     });
   }
 };

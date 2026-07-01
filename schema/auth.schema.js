@@ -16,3 +16,11 @@ export const createUserSchema = loginUserSchema.extend({
         "Password must be 6 to 15 characters long"
     )
 })
+
+export const sendOtpSchema = z.object({
+    mobile: z.string().regex(/^[0-9]{10}$/, "Mobile must be 10 digits"),
+})
+
+export const verifyOtpSchema = sendOtpSchema.extend({
+    otp: z.string().regex(/^[0-9]{4}$/, "OTP must be 4 digits")
+})
