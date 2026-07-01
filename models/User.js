@@ -67,9 +67,9 @@ userSchema.methods.getToken = function () {
   return jwt.sign(
     { _id: this._id },
     process.env.JWT_SECRET,
-    {
-      expiresIn: `${process.env.COOKIE_EXPIRE}`,
-    }
+    // {
+    //   expiresIn: `${process.env.COOKIE_EXPIRE}`, // do not expire the token
+    // }
   );
 };
 
